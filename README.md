@@ -23,7 +23,7 @@ Notepad App is a prototype notepad designed for practice purposes. It uses a loc
 
 ## Execution Instructions
 
-Download [notepad.apk](https://github.com/AlexitoSnow) and install it on your Android device.
+Download [notepad.apk](https://github.com/AlexitoSnow/SnowNotepad/releases/download/v0.0.0/notepad.apk) and install it on your Android device.
 
 ## Status
 
