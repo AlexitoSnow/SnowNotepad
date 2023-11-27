@@ -1,0 +1,38 @@
+name: notepad_app
+description: Notepad App is a prototype notepad designed for practice purposes. It uses a local database to store the notes and has a simple and intuitive interface
+publish_to: 'none'
+version: 0.0.0
+
+environment:
+  sdk: '>=3.1.2 <4.0.0'
+
+dependencies:
+  dotted_border: ^2.1.0
+  flutter:
+    sdk: flutter
+  get: ^4.6.6
+  http: ^1.1.0
+  icons_launcher: ^2.1.5
+  path: ^1.8.3
+  path_provider: ^2.1.1
+  permission_handler: ^11.1.0
+  sqflite: ^2.3.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+
+icons_launcher:
+  image_path: "assets/icons/mainIcon.png"
+  platforms:
+    android:
+      enable: true
+    windows:
+      enable: true
