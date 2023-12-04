@@ -1,11 +1,12 @@
-class Folder {
-  int? id;
+import 'item.dart';
+
+class Folder extends Item {
   String title;
   int userId;
   int? parentId;
 
   Folder({
-    required this.id,
+    super.id,
     required this.title,
     required this.parentId,
     required this.userId,

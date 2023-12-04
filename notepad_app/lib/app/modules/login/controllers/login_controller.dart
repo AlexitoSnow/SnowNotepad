@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../../data/services/repository/repository.dart';
 import '../../../routes/app_pages.dart';
 import '../../folders/views/folders_view.dart';
+import 'package:local_auth/local_auth.dart';
 
 class LoginController extends GetxController {
   final Repository repo = Repository.getInstance();
@@ -48,7 +49,7 @@ class LoginController extends GetxController {
   }
 
   /// Send a recovery password to the user email
-  /// TODO: Implement this method
+  /// TODO: Implement local auth to show the password
   Future<bool> sendRecoveryPassword(String email) async {
     Get.back();
     email = email.trim();

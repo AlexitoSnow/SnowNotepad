@@ -1,8 +1,12 @@
+import 'package:filesaverz/filesaverz.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 import '../../../data/models/folder.dart';
 import '../../../data/models/note.dart';
 import '../../../data/services/repository/repository.dart';
+import '../../../routes/app_pages.dart';
 
 class FoldersController extends GetxController {
   final int parentFolderId;
@@ -12,8 +16,15 @@ class FoldersController extends GetxController {
   final _selectedFolder = (-1).obs;
   final _selectedNote = (-1).obs;
   final _isCardSelected = false.obs;
+  final _currentIndex = 0.obs;
 
   FoldersController(this.parentFolderId);
+
+  int get currentIndex => _currentIndex.value;
+
+  set currentIndex(int value) {
+    _currentIndex.value = value;
+  }
 
   @override
   void onClose() {
@@ -107,5 +118,42 @@ class FoldersController extends GetxController {
       selectedNote = -1;
     }
     update();
+  }
+
+  void shareNote() {
+    final note = notes.firstWhere((element) => element.id == selectedNote);
+    Share.share(note.content, subject: note.title);
+  }
+
+  Future<void> saveTxtFile() async {
+    var status = await Permission.storage.status;
+    final note = notes.firstWhere((element) => element.id == selectedNote);
+    if (!status.isGranted) {
+      status = await Permission.manageExternalStorage.request();
+      if (!status.isGranted) {
+        openAppSettings();
+      }
+    }
+    if (status.isGranted) {
+      FileSaver fileSaver = FileSaver(
+        fileTypes: const ['txt'],
+        initialFileName: note.title,
+        style: FileSaverStyle(
+          primaryColor: Get.theme.primaryColor,
+          secondaryColor: Get.theme.colorScheme.background,
+          secondaryTextStyle: const TextStyle(color: Colors.white),
+        ),
+      );
+      await fileSaver.writeAsString(
+        note.content,
+        context: Get.context!,
+      );
+    }
+    Get.back();
+  }
+
+  void logout() {
+    repo.logout();
+    Get.offAllNamed(Routes.LOGIN);
   }
 }

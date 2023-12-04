@@ -12,15 +12,19 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_native_splash: ^2.3.6
+  gap: ^3.0.1
   get: ^4.6.6
   http: ^1.1.0
   icons_launcher: ^2.1.5
+  local_auth: ^2.1.7
   path: ^1.8.3
   path_provider: ^2.1.1
   path_provider_android: ^2.2.1
   permission_handler: ^11.1.0
   share_plus: ^7.2.1
+  sidebarx: ^0.16.3
   sqflite: ^2.3.0
+  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:

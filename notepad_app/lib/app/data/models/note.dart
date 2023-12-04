@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
+import 'item.dart';
 
-class Note {
-  int? id;
+class Note extends Item {
   final RxString _title;
   final RxString _content;
   int? folderId;
 
   Note({
-    required this.id,
+    super.id,
     required String title,
     String content = '',
     this.folderId,

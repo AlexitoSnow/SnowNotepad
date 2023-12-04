@@ -17,7 +17,7 @@ class LoginView extends GetView<LoginController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            headerSection(),
+            headerSection(MediaQuery.of(context).size.height * 0.3),
             formSection(),
           ],
         ),
@@ -80,14 +80,14 @@ class LoginView extends GetView<LoginController> {
     );
   }
 
-  Widget headerSection() {
+  Widget headerSection(double height) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       margin: const EdgeInsets.only(bottom: 40.0),
       alignment: Alignment.centerLeft,
       color: Get.theme.primaryColor,
       width: double.infinity,
-      height: MediaQuery.of(Get.context!).size.height * 0.3,
+      height: height,
       child: const Text(
         "Welcome to\nSnow's Notepad",
         style: TextStyle(
