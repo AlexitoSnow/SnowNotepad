@@ -8,14 +8,18 @@ environment:
 
 dependencies:
   dotted_border: ^2.1.0
+  filesaverz: ^3.2.0
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.3.6
   get: ^4.6.6
   http: ^1.1.0
   icons_launcher: ^2.1.5
   path: ^1.8.3
   path_provider: ^2.1.1
+  path_provider_android: ^2.2.1
   permission_handler: ^11.1.0
+  share_plus: ^7.2.1
   sqflite: ^2.3.0
 
 dev_dependencies:
@@ -34,5 +38,10 @@ icons_launcher:
   platforms:
     android:
       enable: true
-    windows:
-      enable: true
+
+flutter_native_splash:
+  branding: assets/branding/logo-alexander.png
+  color: "#bdbdbd"
+  android_12:
+    branding: assets/branding/logo-alexander.png
+    color: "#bdbdbd"

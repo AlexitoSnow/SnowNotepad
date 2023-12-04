@@ -81,23 +81,23 @@ class Login extends StatelessWidget {
     );
   }
 
-  Container headerSection() {
+  Widget headerSection() {
     return Container(
-      padding: const EdgeInsets.all(16.0),
-      margin: const EdgeInsets.only(bottom: 40.0),
-      alignment: Alignment.centerLeft,
-      color: Get.theme.primaryColor,
-      width: double.infinity,
-      height: Get.height * 0.3,
-      child: const Text(
-        "Welcome to\nSnow's Notepad",
-        style: TextStyle(
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          height: 2,
-        ),
-      ),
-    );
+          padding: const EdgeInsets.all(16.0),
+          margin: const EdgeInsets.only(bottom: 40.0),
+          alignment: Alignment.centerLeft,
+          color: Get.theme.primaryColor,
+          width: double.infinity,
+          height: MediaQuery.of(Get.context!).size.height * 0.3,
+          child: const Text(
+            "Welcome to\nSnow's Notepad",
+            style: TextStyle(
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              height: 2,
+            ),
+          ),
+        );
   }
 
   Future<void> login() async {

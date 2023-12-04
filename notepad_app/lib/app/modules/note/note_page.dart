@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/models/note.dart';
@@ -37,9 +36,25 @@ class Note extends StatelessWidget {
         controller.updateNoteTitle();
       },
     );
-
+    List<PopupMenuItem<String>> menuItems = [
+      PopupMenuItem(
+        child: ListTile(
+          leading: const Icon(Icons.share),
+          title: const Text('Share note'),
+          onTap: controller.shareNote,
+        ),
+      ),
+      PopupMenuItem(
+        child: ListTile(
+          leading: const Icon(Icons.text_snippet),
+          title: const Text('Export to TXT'),
+          onTap: controller.saveTxtFile,
+        ),
+      ),
+    ];
     return Scaffold(
-      appBar: FormattedAppBar().build(title, actions: actions),
+      appBar: FormattedAppBar()
+          .build(title, actions: actions, moreActions: menuItems),
       body: SizedBox(
         height: Get.height,
         child: TextField(
@@ -47,8 +62,11 @@ class Note extends StatelessWidget {
             border: InputBorder.none,
             hintText: 'Write your note here...',
           ),
+          textCapitalization: TextCapitalization.sentences,
+          keyboardType: TextInputType.multiline,
           controller: controller.contentControl,
           maxLines: null,
+          onTapOutside: (value) => controller.updateNoteContent(),
         ),
       ),
     );
