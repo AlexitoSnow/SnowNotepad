@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../global/snackbar_widget.dart';
-import '../../global/textformfield_widget.dart';
-import 'register_controller.dart';
+import '../../../global/snackbar_widget.dart';
+import '../../../global/textformfield_widget.dart';
+import '../controllers/register_controller.dart';
 
-class Register extends StatelessWidget {
-  final RegisterController controller = Get.put(RegisterController());
+class RegisterView extends GetView<RegisterController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Register({Key? key}) : super(key: key);
+  RegisterView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

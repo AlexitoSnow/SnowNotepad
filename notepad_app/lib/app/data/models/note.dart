@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 
-class MNote {
+class Note {
   int? id;
   final RxString _title;
   final RxString _content;
   int? folderId;
 
-  MNote({
+  Note({
     required this.id,
     required String title,
     String content = '',
@@ -14,8 +14,8 @@ class MNote {
   })  : _title = RxString(title),
         _content = RxString(content);
 
-  factory MNote.fromMap(Map<String, dynamic> map) {
-    return MNote(
+  factory Note.fromMap(Map<String, dynamic> map) {
+    return Note(
       id: map['id'],
       title: map['title'],
       content: map['content'],
@@ -38,7 +38,7 @@ class MNote {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MNote && other.id == id;
+    return other is Note && other.id == id;
   }
 
   Map<String, dynamic> toMap() {

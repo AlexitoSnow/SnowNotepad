@@ -1,14 +1,14 @@
 // ignore_for_file: must_be_immutable
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/models/note.dart';
-import '../../global/appbar/appbar_widget.dart';
-import 'note_controller.dart';
+import '../../../data/models/note.dart';
+import '../../../global/appbar/appbar_widget.dart';
+import '../controllers/note_controller.dart';
 
-class Note extends StatelessWidget {
+class NoteView extends StatelessWidget {
   late NoteController controller;
 
-  Note(MNote note, {super.key}) {
+  NoteView(Note note, {super.key}) {
     controller = Get.put(NoteController(note));
   }
 

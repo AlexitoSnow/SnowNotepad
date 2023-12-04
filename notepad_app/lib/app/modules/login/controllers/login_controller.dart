@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../data/services/repository/repository.dart';
-import '../folders/folders_page.dart';
+import '../../../data/services/repository/repository.dart';
+import '../../../routes/app_pages.dart';
+import '../../folders/views/folders_view.dart';
 
-class RegisterController extends GetxController {
+class LoginController extends GetxController {
   final Repository repo = Repository.getInstance();
   final TextEditingController usernameControl = TextEditingController();
-  final TextEditingController emailControl = TextEditingController();
   final TextEditingController passwordControl = TextEditingController();
-  final TextEditingController confirmPasswordControl = TextEditingController();
 
   final _showPassword = true.obs;
 
@@ -21,7 +20,6 @@ class RegisterController extends GetxController {
   @override
   void onClose() {
     usernameControl.dispose();
-    emailControl.dispose();
     passwordControl.dispose();
     super.onClose();
   }
@@ -32,20 +30,28 @@ class RegisterController extends GetxController {
         _showPassword.value ? Icons.visibility_off : Icons.visibility;
   }
 
-  Future<bool> register() async {
-    final userName = usernameControl.text.trim();
-    final password = passwordControl.text;
-    final email = emailControl.text.trim();
-    if (!(await repo.register(
-        username: userName, password: password, email: email))) {
+  Future<bool> login() async {
+    final username = usernameControl.text.trim();
+    final password = passwordControl.text.trim();
+    if (!(await repo.login(username: username, password: password))) {
       return false;
     }
     final parentFolder = (await repo.getMainFolder())!;
-    Get.offAll(() => Folders(parentFolder));
+    Get.offAll(() => FoldersView(parentFolder));
     return true;
   }
 
-  void goToLogin() {
+  void goToRegister() {
+    Get.toNamed(Routes.REGISTER);
+    usernameControl.clear();
+    passwordControl.clear();
+  }
+
+  /// Send a recovery password to the user email
+  /// TODO: Implement this method
+  Future<bool> sendRecoveryPassword(String email) async {
     Get.back();
+    email = email.trim();
+    return repo.searchUserBy('email', email);
   }
 }

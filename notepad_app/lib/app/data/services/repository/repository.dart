@@ -82,7 +82,7 @@ class Repository {
     _currentUser = (await DatabaseProvider.findUser(username, password))!;
 
     // Creamos la carpeta principal del usuario
-    MFolder mainFolder = MFolder(
+    Folder mainFolder = Folder(
         title: '$username main folder',
         parentId: null,
         id: null,
@@ -91,25 +91,25 @@ class Repository {
     return true;
   }
 
-  Future<MFolder?> getMainFolder() async {
+  Future<Folder?> getMainFolder() async {
     int id = _currentUser!.id ?? -1;
     if (id == -1) return null;
-    final MFolder? mainFolder = await DatabaseProvider.mainFolder(id);
+    final Folder? mainFolder = await DatabaseProvider.mainFolder(id);
     return mainFolder;
   }
 
-  Future<List<MFolder>?> getFoldersOf(int parentFolderId) async {
+  Future<List<Folder>?> getFoldersOf(int parentFolderId) async {
     return await DatabaseProvider.folders(parentFolderId);
   }
 
-  Future<List<MNote>?> getNotesOf(int parentFolderId) async {
+  Future<List<Note>?> getNotesOf(int parentFolderId) async {
     return await DatabaseProvider.notes(parentFolderId);
   }
 
   /// Update or Insert the folders into the database
-  Future<void> updateOrInsertFolders(List<MFolder> folders) async {
+  Future<void> updateOrInsertFolders(List<Folder> folders) async {
     for (var folder in folders) {
-      final MFolder? f = await DatabaseProvider.folder(folder.id!);
+      final Folder? f = await DatabaseProvider.folder(folder.id!);
       if (f != null) {
         updateFolder(folder);
       } else {
@@ -118,9 +118,9 @@ class Repository {
     }
   }
 
-  Future<void> updateOrInsertNotes(List<MNote> notes) async {
+  Future<void> updateOrInsertNotes(List<Note> notes) async {
     for (var note in notes) {
-      final MNote? n = await DatabaseProvider.note(note.id!);
+      final Note? n = await DatabaseProvider.note(note.id!);
       if (n != null) {
         updateNote(note);
       } else {
@@ -131,29 +131,29 @@ class Repository {
 
   /// Insert a new folder into the database
   /// Return the folder with the id assigned by the database
-  Future<MFolder> insertFolder(MFolder folder) async {
+  Future<Folder> insertFolder(Folder folder) async {
     return await DatabaseProvider.insertFolder(folder);
   }
 
   /// Insert a new note into the database
   /// Return the note with the id assigned by the database
-  Future<MNote> insertNote(MNote note) async {
+  Future<Note> insertNote(Note note) async {
     return await DatabaseProvider.insertNote(note);
   }
 
-  Future<void> updateNote(MNote note) async {
+  Future<void> updateNote(Note note) async {
     await DatabaseProvider.updateNote(note);
   }
 
-  Future<void> updateFolder(MFolder folder) async {
+  Future<void> updateFolder(Folder folder) async {
     await DatabaseProvider.updateFolder(folder);
   }
 
-  void deleteNote(MNote note) {
+  void deleteNote(Note note) {
     DatabaseProvider.deleteNote(note);
   }
 
-  void deleteFolder(MFolder folder) {
+  void deleteFolder(Folder folder) {
     DatabaseProvider.deleteFolder(folder);
   }
 }

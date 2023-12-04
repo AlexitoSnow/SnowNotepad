@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../global/textformfield_widget.dart';
+import '../../../global/textformfield_widget.dart';
 
 class EditAlertDialog extends StatelessWidget {
   final TextEditingController controller;

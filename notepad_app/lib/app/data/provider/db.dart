@@ -6,7 +6,7 @@ import '../models/note.dart';
 import '../models/user.dart';
 
 class DatabaseProvider {
-  static Future<void> deleteFolder(MFolder folder) async {
+  static Future<void> deleteFolder(Folder folder) async {
     final Database database = await _openDB();
     await database.delete(
       'folders',
@@ -16,7 +16,7 @@ class DatabaseProvider {
     await _deleteFolderAndSubfolders(database, folder.id!);
   }
 
-  static Future<void> deleteNote(MNote note) async {
+  static Future<void> deleteNote(Note note) async {
     final Database database = await _openDB();
     await database.delete(
       'notes',
@@ -60,7 +60,7 @@ class DatabaseProvider {
     return null;
   }
 
-  static Future<MFolder?> folder(int id) async {
+  static Future<Folder?> folder(int id) async {
     final Database database = await _openDB();
     final List<Map<String, dynamic>> maps = await database.query(
       'folders',
@@ -68,12 +68,12 @@ class DatabaseProvider {
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return MFolder.fromMap(maps[0]);
+      return Folder.fromMap(maps[0]);
     }
     return null;
   }
 
-  static Future<List<MFolder>> folders(int parentId) async {
+  static Future<List<Folder>> folders(int parentId) async {
     final Database database = await _openDB();
     final List<Map<String, dynamic>> maps = await database.query(
       'folders',
@@ -83,12 +83,12 @@ class DatabaseProvider {
     return List.generate(
       maps.length,
       (i) {
-        return MFolder.fromMap(maps[i]);
+        return Folder.fromMap(maps[i]);
       },
     );
   }
 
-  static Future<MFolder> insertFolder(MFolder folder) async {
+  static Future<Folder> insertFolder(Folder folder) async {
     final Database database = await _openDB();
     await database.insert('folders', folder.toMap());
     final List<Map<String, dynamic>> maps = await database.query(
@@ -96,10 +96,10 @@ class DatabaseProvider {
       orderBy: 'id DESC',
       limit: 1,
     );
-    return MFolder.fromMap(maps[0]);
+    return Folder.fromMap(maps[0]);
   }
 
-  static Future<MNote> insertNote(MNote note) async {
+  static Future<Note> insertNote(Note note) async {
     final Database database = await _openDB();
     await database.insert('notes', note.toMap());
     final List<Map<String, dynamic>> maps = await database.query(
@@ -107,7 +107,7 @@ class DatabaseProvider {
       orderBy: 'id DESC',
       limit: 1,
     );
-    return MNote.fromMap(maps[0]);
+    return Note.fromMap(maps[0]);
   }
 
   static Future<void> insertUser(User user) async {
@@ -115,7 +115,7 @@ class DatabaseProvider {
     await database.insert('users', user.toMap());
   }
 
-  static Future<MFolder?> mainFolder(int userId) async {
+  static Future<Folder?> mainFolder(int userId) async {
     final Database database = await _openDB();
     final List<Map<String, dynamic>> maps = await database.query(
       'folders',
@@ -123,12 +123,12 @@ class DatabaseProvider {
       whereArgs: [userId],
     );
     if (maps.isNotEmpty) {
-      return MFolder.fromMap(maps[0]);
+      return Folder.fromMap(maps[0]);
     }
     return null;
   }
 
-  static Future<MNote?> note(int id) async {
+  static Future<Note?> note(int id) async {
     final Database database = await _openDB();
     final List<Map<String, dynamic>> maps = await database.query(
       'notes',
@@ -136,12 +136,12 @@ class DatabaseProvider {
       whereArgs: [id],
     );
     if (maps.isNotEmpty) {
-      return MNote.fromMap(maps[0]);
+      return Note.fromMap(maps[0]);
     }
     return null;
   }
 
-  static Future<List<MNote>> notes(int folderId) async {
+  static Future<List<Note>> notes(int folderId) async {
     final Database database = await _openDB();
     final List<Map<String, dynamic>> maps = await database.query(
       'notes',
@@ -151,12 +151,12 @@ class DatabaseProvider {
     return List.generate(
       maps.length,
       (i) {
-        return MNote.fromMap(maps[i]);
+        return Note.fromMap(maps[i]);
       },
     );
   }
 
-  static Future<void> updateFolder(MFolder folder) async {
+  static Future<void> updateFolder(Folder folder) async {
     final Database database = await _openDB();
     await database.update(
       'folders',
@@ -166,7 +166,7 @@ class DatabaseProvider {
     );
   }
 
-  static Future<void> updateNote(MNote note) async {
+  static Future<void> updateNote(Note note) async {
     final Database database = await _openDB();
     await database.update(
       'notes',

@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../global/snackbar_widget.dart';
-import '../../global/textformfield_widget.dart';
-import 'login_controller.dart';
+import '../../../global/snackbar_widget.dart';
+import '../../../global/textformfield_widget.dart';
+import '../controllers/login_controller.dart';
 
-class Login extends StatelessWidget {
-  final LoginController controller = Get.put(LoginController());
+class LoginView extends GetView<LoginController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  Login({Key? key}) : super(key: key);
+  LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,21 +82,21 @@ class Login extends StatelessWidget {
 
   Widget headerSection() {
     return Container(
-          padding: const EdgeInsets.all(16.0),
-          margin: const EdgeInsets.only(bottom: 40.0),
-          alignment: Alignment.centerLeft,
-          color: Get.theme.primaryColor,
-          width: double.infinity,
-          height: MediaQuery.of(Get.context!).size.height * 0.3,
-          child: const Text(
-            "Welcome to\nSnow's Notepad",
-            style: TextStyle(
-              fontSize: 30.0,
-              fontWeight: FontWeight.bold,
-              height: 2,
-            ),
-          ),
-        );
+      padding: const EdgeInsets.all(16.0),
+      margin: const EdgeInsets.only(bottom: 40.0),
+      alignment: Alignment.centerLeft,
+      color: Get.theme.primaryColor,
+      width: double.infinity,
+      height: MediaQuery.of(Get.context!).size.height * 0.3,
+      child: const Text(
+        "Welcome to\nSnow's Notepad",
+        style: TextStyle(
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          height: 2,
+        ),
+      ),
+    );
   }
 
   Future<void> login() async {

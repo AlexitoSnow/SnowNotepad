@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
 
-import '../../data/models/folder.dart';
-import '../../data/models/note.dart';
-import '../../data/services/repository/repository.dart';
+import '../../../data/models/folder.dart';
+import '../../../data/models/note.dart';
+import '../../../data/services/repository/repository.dart';
 
 class FoldersController extends GetxController {
   final int parentFolderId;
-  final folders = RxList<MFolder>();
-  final notes = RxList<MNote>();
+  final folders = RxList<Folder>();
+  final notes = RxList<Note>();
   final Repository repo = Repository.getInstance();
   final _selectedFolder = (-1).obs;
   final _selectedNote = (-1).obs;
@@ -63,7 +63,7 @@ class FoldersController extends GetxController {
   void addFolder({String? title}) async {
     int id = folders.length + 1;
     title = title ?? 'New Folder $id';
-    MFolder folder = MFolder(
+    Folder folder = Folder(
         id: null, title: title, parentId: parentFolderId, userId: repo.userId!);
     folder = await repo.insertFolder(folder);
     folders.add(folder);
@@ -73,7 +73,7 @@ class FoldersController extends GetxController {
   void addNote({String? title}) async {
     int id = notes.length + 1;
     title = title ?? 'New Note $id';
-    MNote note = MNote(id: null, title: title, folderId: parentFolderId);
+    Note note = Note(id: null, title: title, folderId: parentFolderId);
     note = await repo.insertNote(note);
     notes.add(note);
   }

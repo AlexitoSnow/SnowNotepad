@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/services/repository/repository.dart';
-
+import '../../../data/services/repository/repository.dart';
 
 class SettingsController extends GetxController {
   Repository repo = Repository.getInstance();

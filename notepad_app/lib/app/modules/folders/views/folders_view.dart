@@ -1,31 +1,31 @@
+// ignore_for_file: overridden_fields
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../data/models/folder.dart';
-import '../../data/models/note.dart';
-import '../../global/appbar/appbar_widget.dart';
+import '../../../data/models/folder.dart';
+import '../../../data/models/note.dart';
+import '../../../global/appbar/appbar_widget.dart';
+import '../../../global/textformfield_widget.dart';
+import '../../../routes/app_pages.dart';
+import '../../note/views/note_view.dart';
+import '../controllers/folders_controller.dart';
 import 'card_widget.dart';
-import '../../global/textformfield_widget.dart';
-import '../../routes/routes.dart';
-import '../note/note_page.dart';
 import 'delete_dialog.dart';
 import 'edit_dialog.dart';
-import 'folders_controller.dart';
 
-class Folders extends StatelessWidget {
-  final FoldersController controller;
+class FoldersView extends GetView<FoldersController> {
   final String title;
   final cardColor = const Color.fromARGB(255, 108, 73, 204);
   final cardSelectedColor = const Color.fromARGB(255, 60, 41, 114);
   final screenWidth = Get.width;
   final cardWidth = Get.width / 2;
+  @override
+  final String tag;
 
-  Folders(MFolder parentFolder, {Key? key})
-      : controller = Get.put(
-          FoldersController(parentFolder.id!),
-          tag: parentFolder.id!.toString(),
-        ),
+  FoldersView(Folder parentFolder, {Key? key})
+      : tag = parentFolder.id!.toString(),
         title =
             parentFolder.parentId == null ? 'Dashboard' : parentFolder.title,
         super(key: key);
@@ -116,7 +116,7 @@ class Folders extends StatelessWidget {
     );
   }
 
-  FormattedCard createFolderCard(MFolder folder) {
+  FormattedCard createFolderCard(Folder folder) {
     return FormattedCard(
         keyId: folder.id!,
         title: folder.title,
@@ -126,7 +126,7 @@ class Folders extends StatelessWidget {
         onTap: () async {
           clearSelection();
           Get.toNamed(Routes.SPLASH);
-          Get.off(() => Folders(folder));
+          Get.off(() => FoldersView(folder));
         },
         selected: controller.selectedFolder == folder.id!,
         onLongPress: () {
@@ -169,7 +169,7 @@ class Folders extends StatelessWidget {
         'Note title', (String value) => controller.addNote(title: value));
   }
 
-  FormattedCard createNoteCard(MNote note) {
+  FormattedCard createNoteCard(Note note) {
     const height = 80.0;
     return FormattedCard(
         keyId: note.id!,
@@ -181,7 +181,7 @@ class Folders extends StatelessWidget {
         selectedColor: cardSelectedColor,
         onTap: () {
           clearSelection();
-          Get.to(() => Note(note));
+          Get.to(() => NoteView(note));
         },
         onLongPress: () {
           controller.toggleNoteSelected(note.id!);

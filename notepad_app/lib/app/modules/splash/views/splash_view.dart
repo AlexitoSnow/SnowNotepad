@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Splash extends StatelessWidget {
-  const Splash({super.key});
+import '../controllers/splash_controller.dart';
+
+class SplashView extends GetView<SplashController> {
+  const SplashView({super.key});
 
   @override
   Widget build(BuildContext context) {

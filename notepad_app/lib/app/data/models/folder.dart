@@ -1,17 +1,17 @@
-class MFolder {
+class Folder {
   int? id;
   String title;
   int userId;
   int? parentId;
 
-  MFolder({
+  Folder({
     required this.id,
     required this.title,
     required this.parentId,
     required this.userId,
   });
 
-  factory MFolder.fromMap(Map<String, dynamic> map) => MFolder(
+  factory Folder.fromMap(Map<String, dynamic> map) => Folder(
         id: map['id'],
         title: map['title'],
         parentId: map['parentId'],
@@ -33,7 +33,7 @@ class MFolder {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
 
-    return other is MFolder && other.id == id;
+    return other is Folder && other.id == id;
   }
 
   Map<String, dynamic> toMap() {

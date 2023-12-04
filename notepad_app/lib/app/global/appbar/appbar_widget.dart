@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../data/services/repository/repository.dart';
-import '../../routes/routes.dart';
+import '../../routes/app_pages.dart';
 import 'app_bar_controller.dart';
 
 class FormattedAppBar {
