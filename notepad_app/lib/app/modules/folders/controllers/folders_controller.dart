@@ -17,6 +17,7 @@ class FoldersController extends GetxController {
   final _selectedNote = (-1).obs;
   final _isCardSelected = false.obs;
   final _currentIndex = 0.obs;
+  final adId = 'ca-app-pub-2656195059382799/8903304215';
 
   FoldersController(this.parentFolderId);
 

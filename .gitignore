@@ -43,7 +43,7 @@
 **/android/app/profile
 **/android/app/release
 
-# Ignore .gitignore and README.md in subdirectories
+# Ignore important files
 notepad_app/.gitignore
 notepad_app/README.md
-
+notepad_app/android/key.properties

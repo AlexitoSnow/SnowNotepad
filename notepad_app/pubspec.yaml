@@ -1,21 +1,22 @@
 name: notepad_app
-description: Notepad App is a prototype notepad designed for practice purposes. It uses a local database to store the notes and has a simple and intuitive interface
+description: Notepad App is a notepad designed for practice purposes. It uses a local database to store the notes and has a simple and intuitive interface.
 publish_to: 'none'
-version: 0.0.0
+version: 0.1.0
 
 environment:
   sdk: '>=3.1.2 <4.0.0'
 
 dependencies:
+  admob_flutter: ^3.0.0
   dotted_border: ^2.1.0
   filesaverz: ^3.2.0
   flutter:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
   flutter_native_splash: ^2.3.6
   gap: ^3.0.1
   get: ^4.6.6
   http: ^1.1.0
-  icons_launcher: ^2.1.5
   local_auth: ^2.1.7
   path: ^1.8.3
   path_provider: ^2.1.1
@@ -24,7 +25,6 @@ dependencies:
   share_plus: ^7.2.1
   sidebarx: ^0.16.3
   sqflite: ^2.3.0
-  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:
@@ -37,15 +37,14 @@ flutter:
   assets:
     - assets/icons/
 
-icons_launcher:
-  image_path: "assets/icons/mainIcon.png"
-  platforms:
-    android:
-      enable: true
+flutter_launcher_icons:
+  android: true
+  image_path: "assets/icons/launch-icon.png"
+  min_sdk_android: 21
 
 flutter_native_splash:
-  branding: assets/branding/logo-alexander.png
-  color: "#bdbdbd"
+  color: "#212121"
+  image: "assets/icons/splash-icon.png"
   android_12:
-    branding: assets/branding/logo-alexander.png
-    color: "#bdbdbd"
+    color: "#212121"
+    image: "assets/icons/splash-icon.png"

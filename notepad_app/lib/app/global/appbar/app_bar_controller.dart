@@ -20,5 +20,6 @@ class AppBarController extends GetxController {
         ? const Icon(Icons.dark_mode)
         : const Icon(Icons.light_mode);
     Get.changeThemeMode(_isDark.value ? ThemeMode.dark : ThemeMode.light);
+    update();
   }
 }

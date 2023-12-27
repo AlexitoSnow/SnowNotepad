@@ -2,6 +2,7 @@ import '../../models/folder.dart';
 import '../../models/note.dart';
 import '../../models/user.dart';
 import '../../provider/db.dart';
+import 'dart:math';
 
 class Repository {
   static Repository? _instance;
@@ -155,5 +156,17 @@ class Repository {
 
   void deleteFolder(Folder folder) {
     DatabaseProvider.deleteFolder(folder);
+  }
+
+  Future<String> createTemporaryPassword(String email) async {
+    User? user = await DatabaseProvider.filterUserBy('email', email);
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    final random = Random();
+    user!.password = String.fromCharCodes(Iterable.generate(
+      10,
+      (_) => chars.codeUnitAt(random.nextInt(chars.length)),
+    ));
+    await DatabaseProvider.updateUser(user);
+    return user.password;
   }
 }

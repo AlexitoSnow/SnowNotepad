@@ -20,7 +20,9 @@ class FormattedTextFormField extends StatelessWidget {
     required this.labelText,
     this.prefixIcon,
     this.suffixIcon,
-    this.border = const OutlineInputBorder(),
+    this.border = const OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+    ),
     this.onSubmitted,
     this.obscureText = false,
     this.helperText,
@@ -47,7 +49,7 @@ class FormattedTextFormField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
-        prefixIcon: Icon(prefixIcon),
+        prefixIcon: prefixIcon == null ? null : Icon(prefixIcon),
         suffixIcon: suffixIcon,
         border: border,
         floatingLabelBehavior: FloatingLabelBehavior.always,

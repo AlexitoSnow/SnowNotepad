@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-
+import '../../../global/icon_widget.dart';
 import '../../../global/snackbar_widget.dart';
 import '../../../global/textformfield_widget.dart';
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> emailValidatorKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
 
   LoginView({Key? key}) : super(key: key);
 
@@ -15,9 +18,9 @@ class LoginView extends GetView<LoginController> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            headerSection(MediaQuery.of(context).size.height * 0.3),
+            Gap(MediaQuery.of(context).size.height * 0.2),
+            IconWidget(height: MediaQuery.of(context).size.height * 0.1),
             formSection(),
           ],
         ),
@@ -26,74 +29,74 @@ class LoginView extends GetView<LoginController> {
   }
 
   Widget formSection() {
+    var children = [
+      FormattedTextFormField(
+        controller: controller.usernameControl,
+        keyboardType: TextInputType.name,
+        labelText: 'Username',
+        prefixIcon: Icons.person,
+        onSubmitted: login,
+      ),
+      Obx(() => FormattedTextFormField(
+            keyboardType: TextInputType.visiblePassword,
+            controller: controller.passwordControl,
+            labelText: 'Password',
+            prefixIcon: Icons.lock,
+            suffixIcon: IconButton(
+                onPressed: controller.toggleShowPassword,
+                icon: Icon(controller.iconPassword)),
+            onSubmitted: login,
+            obscureText: controller.showPassword,
+          )),
+      Align(
+        alignment: Alignment.centerRight,
+        child: TextButton(
+            onPressed: openRecoveryPassword,
+            child: const Text(
+              'Forgot password?',
+            )),
+      ),
+      Obx(() => controller.isProcessing
+          ? const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+                strokeWidth: 1.0,
+              ),
+            )
+          : Center(
+              child: ElevatedButton(
+                onPressed: controller.isProcessing ? null : login,
+                child: const Text('Login'),
+              ),
+            )),
+      Wrap(
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          const Text("Don't have an account?"),
+          Obx(
+            () => TextButton(
+              onPressed:
+                  controller.isProcessing ? null : controller.goToRegister,
+              child: const Text('Register'),
+            ),
+          ),
+        ],
+      ),
+    ];
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0),
       child: Form(
         key: formKey,
         child: Column(
           children: [
-            FormattedTextFormField(
-              controller: controller.usernameControl,
-              keyboardType: TextInputType.name,
-              labelText: 'Username',
-              prefixIcon: Icons.person,
-              onSubmitted: login,
-            ),
-            const SizedBox(height: 16.0),
-            Obx(() => FormattedTextFormField(
-                  keyboardType: TextInputType.visiblePassword,
-                  controller: controller.passwordControl,
-                  labelText: 'Password',
-                  prefixIcon: Icons.lock,
-                  suffixIcon: IconButton(
-                      onPressed: controller.toggleShowPassword,
-                      icon: Icon(controller.iconPassword)),
-                  onSubmitted: login,
-                  obscureText: controller.showPassword,
-                )),
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                  onPressed: goToRecovery,
-                  child: const Text(
-                    'Forgot password?',
-                  )),
-            ),
-            const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: login,
-              child: const Text('Login'),
-            ),
-            const SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Don't have an account?"),
-                TextButton(
-                    onPressed: controller.goToRegister,
-                    child: const Text('Register'))
-              ],
-            )
+            ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) => children[index],
+                separatorBuilder: (context, index) => const Gap(16),
+                itemCount: children.length),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget headerSection(double height) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      margin: const EdgeInsets.only(bottom: 40.0),
-      alignment: Alignment.centerLeft,
-      color: Get.theme.primaryColor,
-      width: double.infinity,
-      height: height,
-      child: const Text(
-        "Welcome to\nSnow's Notepad",
-        style: TextStyle(
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          height: 2,
         ),
       ),
     );
@@ -111,47 +114,69 @@ class LoginView extends GetView<LoginController> {
     }
   }
 
-  void goToRecovery() {
-    var emailController = TextEditingController();
+  void openRecoveryPassword() {
     Get.bottomSheet(
       Container(
         color: Get.theme.bottomSheetTheme.backgroundColor,
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text(
-              'Password recovery',
-              style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-            ),
-            FormattedTextFormField(
-              keyboardType: TextInputType.emailAddress,
-              controller: emailController,
-              labelText: 'Email',
-              helperText:
-                  "If you have an account with this email, we'll send you a link",
-              prefixIcon: Icons.mail,
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                if (await controller
-                    .sendRecoveryPassword(emailController.text)) {
-                  const FormattedSnackbar('Success',
-                          'We have sent you an email with a link to reset your password')
-                      .showSnackbar();
-                } else {
-                  const FormattedSnackbar(
-                          'Error', 'Email not found, please check your email')
-                      .showSnackbar();
-                }
-              },
-              child: const Text('Send'),
-            ),
-          ],
+        child: Form(
+          key: emailValidatorKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Password recovery',
+                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+              ),
+              FormattedTextFormField(
+                keyboardType: TextInputType.emailAddress,
+                controller: emailController,
+                labelText: 'Email',
+                helperText:
+                    "If you have an account with this email, we'll send you a link",
+                prefixIcon: Icons.mail,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return 'Please enter your email';
+                  } else if (!GetUtils.isEmail(value)) {
+                    return 'Please enter a valid email';
+                  }
+                },
+              ),
+              ElevatedButton(
+                onPressed: processRecovery,
+                child: const Text('Send'),
+              ),
+            ],
+          ),
         ),
       ),
       backgroundColor: Colors.white,
     );
+  }
+
+  void processRecovery() async {
+    if (!emailValidatorKey.currentState!.validate()) {
+      const FormattedSnackbar(
+              'Not a valid email', 'This email has not a valid format')
+          .showSnackbar();
+      return;
+    }
+    String? temporaryPassword =
+        await controller.sendRecoveryPassword(emailController.text);
+    if (temporaryPassword != null) {
+      Get.defaultDialog(
+          title: 'Temporary password',
+          middleText: 'Please change your password after login',
+          content:
+              SelectableText('Your temporary password is: $temporaryPassword'),
+          textConfirm: 'Thanks',
+          onConfirm: Get.back);
+    } else {
+      const FormattedSnackbar(
+              'Error', 'Email not found, please check your email')
+          .showSnackbar();
+    }
   }
 }

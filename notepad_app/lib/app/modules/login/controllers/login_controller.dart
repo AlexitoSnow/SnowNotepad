@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 import '../../../data/services/repository/repository.dart';
 import '../../../routes/app_pages.dart';
 import '../../folders/views/folders_view.dart';
-import 'package:local_auth/local_auth.dart';
 
 class LoginController extends GetxController {
   final Repository repo = Repository.getInstance();
   final TextEditingController usernameControl = TextEditingController();
   final TextEditingController passwordControl = TextEditingController();
+  final _isProcessing = false.obs;
+
+  bool get isProcessing => _isProcessing.value;
+
+  set isProcessing(bool value) {
+    _isProcessing.value = value;
+  }
 
   final _showPassword = true.obs;
 
@@ -32,9 +39,12 @@ class LoginController extends GetxController {
   }
 
   Future<bool> login() async {
+    isProcessing = true;
     final username = usernameControl.text.trim();
     final password = passwordControl.text.trim();
+    await Future.delayed(const Duration(milliseconds: 500));
     if (!(await repo.login(username: username, password: password))) {
+      isProcessing = false;
       return false;
     }
     final parentFolder = (await repo.getMainFolder())!;
@@ -48,11 +58,28 @@ class LoginController extends GetxController {
     passwordControl.clear();
   }
 
-  /// Send a recovery password to the user email
-  /// TODO: Implement local auth to show the password
-  Future<bool> sendRecoveryPassword(String email) async {
+  /// Show your password if you have a local authentication
+  Future<String?> sendRecoveryPassword(String email) async {
     Get.back();
     email = email.trim();
-    return repo.searchUserBy('email', email);
+    if (await requestLocalAuth()) {
+      if (await repo.searchUserBy('email', email)) {
+        return repo.createTemporaryPassword(email);
+      }
+    } else {
+      return null;
+    }
+    return null;
+  }
+
+  Future<bool> requestLocalAuth() async {
+    final LocalAuthentication auth = LocalAuthentication();
+    bool authenticated = await auth.authenticate(
+      localizedReason: 'Verify your identity to recover your password',
+      options: const AuthenticationOptions(
+        stickyAuth: true,
+      ),
+    );
+    return authenticated;
   }
 }

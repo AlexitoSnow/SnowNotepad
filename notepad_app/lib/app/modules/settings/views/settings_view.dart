@@ -14,13 +14,6 @@ class SettingsView extends GetView<SettingsController> {
       body: Center(
         child: ListView(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: CircleAvatar(
-                radius: 50,
-                child: Icon(Icons.person, size: 50),
-              ),
-            ),
             ListTile(
               title: const Text('Username'),
               subtitle: Obx(

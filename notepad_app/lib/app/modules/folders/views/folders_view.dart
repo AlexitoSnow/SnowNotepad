@@ -1,7 +1,7 @@
 // ignore_for_file: overridden_fields
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:sidebarx/sidebarx.dart';
 import '../../../data/models/folder.dart';
@@ -58,42 +58,54 @@ class FoldersView extends StatelessWidget {
           onPressed: askForNewNote),
     ];
     return Scaffold(
-        appBar: FormattedAppBar().build(Text(title), actions: actions),
-        drawer: drawer(),
-        body: GestureDetector(
-          onTap: clearSelection,
-          child: SingleChildScrollView(
-            child: SizedBox(
-              height: Get.height,
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Obx(() {
-                    switch (controller.currentIndex) {
-                      case 0:
-                        return Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            folders(),
-                            notes(),
-                          ],
-                        );
-                      case 1:
-                        return folders();
-                      case 2:
-                        return notes();
-                      default:
-                        return const Center(
-                          child: Text('No page found'),
-                        );
-                    }
-                  }),
-                ],
-              ),
+      appBar: FormattedAppBar().build(Text(title), actions: actions),
+      drawer: drawer(),
+      body: GestureDetector(
+        onTap: clearSelection,
+        child: SingleChildScrollView(
+          child: SizedBox(
+            height: Get.height,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Obx(() {
+                  switch (controller.currentIndex) {
+                    case 0:
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          folders(),
+                          notes(),
+                        ],
+                      );
+                    case 1:
+                      return folders();
+                    case 2:
+                      return notes();
+                    default:
+                      return const Center(
+                        child: Text('No page found'),
+                      );
+                  }
+                }),
+              ],
             ),
           ),
         ),
-        bottomNavigationBar: Obx(() => cardOptions()));
+      ),
+      bottomNavigationBar: Obx(
+        () => cardOptions(),
+      ),
+      persistentFooterButtons: [
+        Container(
+          constraints: const BoxConstraints.expand(height: 50),
+          child: AdmobBanner(
+            adUnitId: controller.adId,
+            adSize: AdmobBannerSize.BANNER,
+          ),
+        ),
+      ],
+    );
   }
 
   Visibility cardOptions() {

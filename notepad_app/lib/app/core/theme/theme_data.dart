@@ -1,38 +1,45 @@
 import 'package:flutter/material.dart';
 
+const primaryColor = Colors.deepPurpleAccent;
+const secondaryColor = Colors.deepPurple;
+
 class FormattedTheme {
   static final light = ThemeData(
-    primarySwatch: Colors.deepPurple,
-    primaryColor: Colors.deepPurpleAccent,
+    primarySwatch: secondaryColor,
+    primaryColor: primaryColor,
+    scaffoldBackgroundColor: Colors.white,
     hintColor: const Color.fromARGB(255, 47, 0, 175),
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: Color.fromRGBO(124, 77, 255, 0.7),
       contentTextStyle: TextStyle(color: Colors.white),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.deepPurpleAccent,
+      backgroundColor: primaryColor,
       foregroundColor: Colors.white,
-      titleTextStyle: TextStyle(overflow: TextOverflow.ellipsis),
+      titleTextStyle: TextStyle(
+        overflow: TextOverflow.ellipsis,
+        fontSize: 20,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: primaryColor,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.deepPurpleAccent,
+        foregroundColor: primaryColor,
       ),
     ),
     colorScheme: const ColorScheme.light(
-      primary: Colors.deepPurpleAccent,
-      secondary: Colors.deepPurpleAccent,
+      primary: primaryColor,
+      secondary: primaryColor,
     ),
-    primaryColorLight: Colors.deepPurpleAccent,
+    primaryColorLight: primaryColor,
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.deepPurpleAccent,
+        foregroundColor: primaryColor,
       ),
     ),
     primaryTextTheme: Typography.blackRedmond,
@@ -42,39 +49,42 @@ class FormattedTheme {
   );
 
   static final dark = ThemeData(
-    primarySwatch: Colors.deepPurple,
-    primaryColor: Colors.deepPurpleAccent,
-    hintColor: Colors.deepPurpleAccent,
+    primarySwatch: secondaryColor,
+    primaryColor: primaryColor,
+    hintColor: secondaryColor,
     snackBarTheme: const SnackBarThemeData(
       backgroundColor: Color.fromRGBO(124, 77, 255, 0.7),
       contentTextStyle: TextStyle(color: Colors.white),
     ),
     appBarTheme: const AppBarTheme(
-      backgroundColor: Colors.deepPurpleAccent,
+      backgroundColor: primaryColor,
       foregroundColor: Colors.white,
-      titleTextStyle: TextStyle(overflow: TextOverflow.ellipsis),
+      titleTextStyle: TextStyle(
+        overflow: TextOverflow.ellipsis,
+        fontSize: 20,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: primaryColor,
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Colors.deepPurpleAccent,
+        foregroundColor: primaryColor,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.deepPurpleAccent,
+        foregroundColor: primaryColor,
       ),
     ),
     colorScheme: const ColorScheme.dark(
-      primary: Colors.deepPurpleAccent,
-      secondary: Colors.deepPurpleAccent,
+      primary: primaryColor,
+      secondary: primaryColor,
     ),
-    primaryColorDark: Colors.deepPurpleAccent,
+    primaryColorDark: primaryColor,
     primaryTextTheme: Typography.whiteRedmond,
     scaffoldBackgroundColor: Colors.grey[900],
     bottomSheetTheme: const BottomSheetThemeData(

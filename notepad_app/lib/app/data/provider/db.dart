@@ -55,7 +55,9 @@ class DatabaseProvider {
       whereArgs: [username, password],
     );
     if (maps.isNotEmpty) {
-      return User.fromMap(maps[0]);
+      final user = User.fromMap(maps[0]);
+      return user;
+
     }
     return null;
   }
